@@ -101,7 +101,7 @@
             <div class="card card-cascade narrower" style="margin-top: 50px">
                 <!--Card image-->
                 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center rounded text-center">
-                    <p href="" class="white-text mx-3">Customers</p>
+                    <p href="" class="white-text mx-3">List of Admins</p>
                 </div>
                 <!--/Card image-->
                 <div class="px-4">

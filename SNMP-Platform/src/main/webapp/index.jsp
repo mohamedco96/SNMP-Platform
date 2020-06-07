@@ -83,6 +83,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
+
+
+                        <%Cookie ck[] = request.getCookies();
+                            System.out.println("####" + ck[1].getName());
+                        %>
+
                         <li class="nav-item active">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#login">
                                 <i class="fas fa-sign-in-alt"></i> Login
@@ -93,13 +99,20 @@
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
                                 <i class="fas fa-user-plus"></i> Add Admin</a>
                         </li>
-
+                        <%
+                            if (ck[1].getValue().equals("yes")) {
+                        %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
+                                <i class="fas fa-user-plus"></i>Sign Out</a>
+                        </li>
+                        <%}%>
                     </ul>
                 </div>
             </nav>
 
-      
-            
+
+
             <!-- Login Modal -->
             <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -112,17 +125,17 @@
                         </div>
                         <div class="modal-body">
                             <!-- Default form login -->
-                            <form class="text-center border border-light p-5" action="#!">
+                            <form class="text-center border border-light p-5" action="./addAdmin" method="POST">
 
                                 <p class="h4 mb-4">Sign in</p>
 
                                 <!-- Email -->
-                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+                                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="User name" name="uname">
 
                                 <!-- Password -->
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="passwd">
 
-
+                                <input type="hidden" name="operation" value="login">
 
                                 <!-- Sign in button -->
                                 <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
@@ -173,7 +186,7 @@
 
                                 <!-- Password -->
                                 <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" name="passwd">
-
+                                <input type="hidden" name="operation" value="addAdmin">
                                 <!-- Sign up button -->
                                 <button class="btn btn-info my-4 btn-block" type="submit">Sign UP</button>
 

@@ -15,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class UsersDAO implements DAO<Users> {
-
+private ResultSet result = null;
     private final Connection conn = Database.getConnection();
 
     @Override
@@ -60,15 +60,33 @@ public class UsersDAO implements DAO<Users> {
             preparedStatment.setString(4, t.getEmail());
             preparedStatment.setString(5, t.getPhone());
             preparedStatment.setString(6, t.getPasswd());
-            
 
             preparedStatment.executeUpdate();
-            
+
         } catch (SQLException ex) {
             System.out.println("##### user insert faild: \n" + ex.getMessage());
             operationSuccess = false;
         }
         return operationSuccess;
+    }
+
+    public boolean login(Users t) {
+        boolean operationSuccess = false;
+        String sqlCommand = " select * from users where username = ? AND passwd = ?";
+        try(PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
+            preparedStatment.setString(1, t.getUname());
+            preparedStatment.setString(2, t.getPasswd());
+            result = preparedStatment.executeQuery();
+
+            while (result.next()) {
+                operationSuccess = result.getBoolean(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### user login faild: \n" + ex.getMessage());
+        } finally {
+            
+            return operationSuccess;
+        }
     }
 
     @Override
