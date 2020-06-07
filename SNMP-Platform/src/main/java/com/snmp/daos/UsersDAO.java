@@ -8,6 +8,7 @@ package com.snmp.daos;
 import com.snmp.database.Database;
 import com.snmp.entities.Users;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +28,7 @@ public class UsersDAO implements DAO<Users> {
         ArrayList<Users> allUsers = new ArrayList<>();
         String customerJoinRatePlanQuery = "select * from users";
 
-        try (Statement stmt1 = conn.createStatement();){
+        try (Statement stmt1 = conn.createStatement();) {
             ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
             while (rs1.next()) {
                 Users user = new Users();
@@ -49,7 +50,25 @@ public class UsersDAO implements DAO<Users> {
 
     @Override
     public boolean save(Users t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean operationSuccess = true;
+        String sqlCommand = " insert into users(username,firstname,lastname,email,phone,passwd) values (?,?,?,?,?,?)";
+
+        try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
+            preparedStatment.setString(1, t.getUname());
+            preparedStatment.setString(2, t.getFname());
+            preparedStatment.setString(3, t.getLname());
+            preparedStatment.setString(4, t.getEmail());
+            preparedStatment.setString(5, t.getPhone());
+            preparedStatment.setString(6, t.getPasswd());
+            
+
+            preparedStatment.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("##### user insert faild: \n" + ex.getMessage());
+            operationSuccess = false;
+        }
+        return operationSuccess;
     }
 
     @Override

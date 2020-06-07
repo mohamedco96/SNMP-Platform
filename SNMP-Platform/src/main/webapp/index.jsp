@@ -147,32 +147,32 @@
                         </div>
                         <div class="modal-body">
                             <!-- Default form register -->
-                            <form class="text-center border border-light p-5" action="#!">
+                            <form class="text-center border border-light p-5" action="./addAdmin" method="POST">
 
                                 <p class="h4 mb-4">Sign up</p>
 
                                 <div class="form-row mb-4">
                                     <div class="col">
                                         <!-- First name -->
-                                        <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+                                        <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name" name="fname">
                                     </div>
                                     <div class="col">
                                         <!-- Last name -->
-                                        <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+                                        <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name" name="lname">
                                     </div>
                                 </div>
 
                                 <!-- user name -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="User Name">
+                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="User Name" name="uname">
 
                                 <!-- E-mail -->
-                                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+                                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" name="email">
 
                                 <!-- PHONE -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phone Number">
+                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phone Number" name="phone">
 
                                 <!-- Password -->
-                                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" name="passwd">
 
                                 <!-- Sign up button -->
                                 <button class="btn btn-info my-4 btn-block" type="submit">Sign UP</button>
