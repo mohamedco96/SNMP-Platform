@@ -4,16 +4,12 @@
     Author     : moham
 --%>
 
+<%@page import="java.util.Vector"%>
+<%@page import="com.snmp.entities.Nodes"%>
+<%@page import="com.snmp.daos.NodesDAO"%>
 <%@page import="com.snmp.entities.Users"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.snmp.daos.UsersDAO"%>
-<%--<%@page import="com.billingsystem.entities.RatePlan"%>
-<%@page import="com.billingsystem.daos.RatePlanDAO"%>
-<%@page import="com.billingsystem.daos.ServiceDAO"%>
-<%@page import="com.billingsystem.entities.Service"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.billingsystem.entities.Customer"%>
-<%@page import="com.billingsystem.daos.CustomerDAO"%>--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -65,6 +61,9 @@
                     <a href="./pages/adminList.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-user mr-3"></i>List of Admins</a>
 
+                    <a href="./pages/Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
+                        <i class="fas fa-server mr-3"></i>Nodes</a>
+
 
                 </div>
             </div>
@@ -111,7 +110,39 @@
                 </div>
             </nav>
 
+            <%
 
+                UsersDAO usersDAO = new UsersDAO();
+                NodesDAO NodesDAO = new NodesDAO();
+
+                ArrayList<Users> listOfUsers = usersDAO.getAll();
+                ArrayList<Nodes> listOfNodes = NodesDAO.getAll();
+            %>
+
+            <div class="container" style="margin-top: 50px">
+                <div class="row">
+                    <div class="four col-md-3">
+                        <div class="counter-box "> <i class="fa fa-user"></i> <span class="counter"><%=listOfUsers.size()%></span>
+                            <p>Admins</p>
+                        </div>
+                    </div>
+                    <div class="four col-md-3">
+                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfNodes.size()%></span>
+                            <p>Nodes</p>
+                        </div>
+                    </div>
+                    <div class="four col-md-3">
+                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter">999</span>
+                            <p>Active Nodes</p>
+                        </div>
+                    </div>
+                    <div class="four col-md-3">
+                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter">999</span>
+                            <p>Deactivate Nodes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Login Modal -->
             <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -197,6 +228,47 @@
                 </div>
             </div>
 
+
+            <div class="row row-cols-1 row-cols-md-3" style="margin-top: 50px">
+                <%
+                    for (Nodes node : listOfNodes) {
+                %>
+                
+                <%
+                    if(node.isStatus()==true){
+                %>
+                <!-- Card -->
+                <div class="col mb-4">
+                    <div class="card text-white bg-success mb-4" style="max-width: 20rem;">
+                        <div class="card-header"><%=node.getName()%></div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%=node.getIp()%></h5>
+                            <p class="card-text text-white"><%=node.getDes()%></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <%}%>
+                
+                <%
+                    if(node.isStatus()==false){
+                %>
+                <!-- Card -->
+                <div class="col mb-4">
+                    <div class="card text-white bg-danger mb-4" style="max-width: 20rem;">
+                        <div class="card-header"><%=node.getName()%></div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%=node.getIp()%></h5>
+                            <p class="card-text text-white"><%=node.getDes()%></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <%}%>
+                
+                <%}%>
+            </div>
+
         </main>
         <!--Main layout-->
         <!--Footer-->
@@ -244,6 +316,23 @@
             <!--/.Copyright-->
         </footer>
         <!--/.Footer-->
+        <script>
+            $(document).ready(function () {
+
+                $('.counter').each(function () {
+                    $(this).prop('Counter', 0).animate({
+                        Counter: $(this).text()
+                    }, {
+                        duration: 4000,
+                        easing: 'swing',
+                        step: function (now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                });
+
+            });
+        </script>
         <!-- SCRIPTS -->
     </body>
 </html>

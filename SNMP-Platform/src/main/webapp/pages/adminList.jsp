@@ -59,6 +59,8 @@
                     <a href="./adminList.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-user mr-3"></i>List of Admins</a>
 
+                    <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
+                        <i class="fas fa-server mr-3"></i>Nodes</a>
 
                 </div>
             </div>
