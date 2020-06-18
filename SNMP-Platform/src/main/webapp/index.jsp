@@ -52,7 +52,7 @@
             <!-- Sidebar -->
             <div class="sidebar-fixed position-fixed">
                 <a class="logo-wrapper waves-effect">
-                    <img src="https://mdbootstrap.com/img/logo/mdb-email.png" class="img-fluid" alt="">
+                    <img src="./img/logo.png" class="img-fluid" alt="">
                 </a>
                 <div class="list-group list-group-flush">
                     <a href="index.jsp" class="list-group-item active waves-effect">
