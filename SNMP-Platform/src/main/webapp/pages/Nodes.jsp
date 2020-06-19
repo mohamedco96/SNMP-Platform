@@ -120,8 +120,6 @@
                                     <th class="text-center">Name</th>
                                     <th class="text-center">IP</th>
                                     <th class="text-center">Description</th>
-                                    <th class="text-center">Alarm type</th>
-                                    <th class="text-center">Status</th>
                                     <th class="text-center">Submit</th>
                                     <th class="text-center">Remove</th>
                                 </tr>
@@ -138,8 +136,6 @@
                                     <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getName()%></td>
                                     <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getIp()%></td>
                                     <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getDes()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getAlarm_type()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).isStatus()%></td>
                                     <td>
                                         <span class="table-submit"><button type="button"
                                                                            class="btn btn-primary btn-rounded btn-sm my-0">Submit</button></span>

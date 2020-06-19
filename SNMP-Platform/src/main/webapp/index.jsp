@@ -44,6 +44,11 @@
         .py-5 {
             margin-bottom: 100px;
         }
+
+        .btn-primary {
+            background-color: #ffffff!important;
+            color: #343a40;
+        }
     </style>
 
     <body class="grey lighten-3">
@@ -85,7 +90,7 @@
 
 
                         <%Cookie ck[] = request.getCookies();
-                            System.out.println("####" + ck[1].getName());
+//                            System.out.println("####" + ck[1].getName());
                         %>
 
                         <li class="nav-item active">
@@ -111,14 +116,15 @@
             </nav>
 
             <%
-
                 UsersDAO usersDAO = new UsersDAO();
                 NodesDAO NodesDAO = new NodesDAO();
 
                 ArrayList<Users> listOfUsers = usersDAO.getAll();
                 ArrayList<Nodes> listOfNodes = NodesDAO.getAll();
+                ArrayList<Nodes> listOfActiveNode = NodesDAO.ActiveNode();
+                ArrayList<Nodes> listOfDeactivateNode = NodesDAO.DeactivateNode();
             %>
-
+            <!-- Counter -->
             <div class="container" style="margin-top: 50px">
                 <div class="row">
                     <div class="four col-md-3">
@@ -132,12 +138,12 @@
                         </div>
                     </div>
                     <div class="four col-md-3">
-                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter">999</span>
+                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfActiveNode.size()%></span>
                             <p>Active Nodes</p>
                         </div>
                     </div>
                     <div class="four col-md-3">
-                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter">999</span>
+                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfDeactivateNode.size()%></span>
                             <p>Deactivate Nodes</p>
                         </div>
                     </div>
@@ -233,9 +239,9 @@
                 <%
                     for (Nodes node : listOfNodes) {
                 %>
-                
+
                 <%
-                    if(node.isStatus()==true){
+                    if (node.isStatus() == true) {
                 %>
                 <!-- Card -->
                 <div class="col mb-4">
@@ -245,13 +251,20 @@
                             <h5 class="card-title"><%=node.getIp()%></h5>
                             <p class="card-text text-white"><%=node.getDes()%></p>
                         </div>
+                        <div class="card-footer text-muted text-center mt-4">
+                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
+                            <form  action="./addAdmin" method="POST">
+                                <input type="hidden" name="operation" value="login">
+                                <button class="btn btn-info  my-4" type="submit">Sign in</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <!-- Card -->
                 <%}%>
-                
+
                 <%
-                    if(node.isStatus()==false){
+                    if (node.isStatus() == false) {
                 %>
                 <!-- Card -->
                 <div class="col mb-4">
@@ -261,11 +274,24 @@
                             <h5 class="card-title"><%=node.getIp()%></h5>
                             <p class="card-text text-white"><%=node.getDes()%></p>
                         </div>
+                        <div class="card-footer text-muted text-center mt-4">
+                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
+                            <div class="d-flex justify-content-center">
+                                <form  action="./addAdmin" method="POST">
+                                    <input type="hidden" name="operation" value="login">
+                                    <button class="btn btn-primary btn-md" type="submit">View Alarms</button>
+                                </form>
+                                <form  action="./addAdmin" method="POST">
+                                    <input type="hidden" name="operation" value="login">
+                                    <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Card -->
                 <%}%>
-                
+
                 <%}%>
             </div>
 

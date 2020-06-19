@@ -42,7 +42,7 @@ public class NodesDAO implements DAO<Nodes> {
                 node.setName(rs1.getString("name"));
                 node.setIp(rs1.getString("ip"));
                 node.setDes(rs1.getString("des"));
-                node.setAlarm_type(rs1.getString("alarm_type"));
+//                node.setAlarm_type(rs1.getString("alarm_type"));
                 node.setStatus(rs1.getBoolean("status"));
                 
                 allNodes.add(node);
@@ -52,16 +52,61 @@ public class NodesDAO implements DAO<Nodes> {
         }
         return allNodes;
     }
+    
+    public ArrayList<Nodes> ActiveNode() {
+        ArrayList<Nodes> allNodes = new ArrayList<>();
+        String customerJoinRatePlanQuery = "select * from nodes where status=true";
 
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Nodes node = new Nodes();
+                node.setId(rs1.getInt("id"));
+                node.setName(rs1.getString("name"));
+                node.setIp(rs1.getString("ip"));
+//                node.setDes(rs1.getString("des"));
+//                node.setAlarm_type(rs1.getString("alarm_type"));
+                node.setStatus(rs1.getBoolean("status"));
+                
+                allNodes.add(node);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### ActiveNode get all faild: \n" + ex.getMessage());
+        }
+        return allNodes;
+    }
+    
+    public ArrayList<Nodes> DeactivateNode() {
+        ArrayList<Nodes> allNodes = new ArrayList<>();
+        String customerJoinRatePlanQuery = "select * from nodes where status=false";
+
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Nodes node = new Nodes();
+                node.setId(rs1.getInt("id"));
+                node.setName(rs1.getString("name"));
+                node.setIp(rs1.getString("ip"));
+//                node.setDes(rs1.getString("des"));
+//                node.setAlarm_type(rs1.getString("alarm_type"));
+                node.setStatus(rs1.getBoolean("status"));
+                
+                allNodes.add(node);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### ActiveNode get all faild: \n" + ex.getMessage());
+        }
+        return allNodes;
+    }
+    
     public void insert(Nodes t) {
         boolean operationSuccess = true;
-        String sqlCommand = " insert into nodes(name,ip,des,alarm_type) values (?,?,?,?)";
+        String sqlCommand = " insert into nodes(name,ip,des) values (?,?,?)";
 
         try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
             preparedStatment.setString(1, t.getName());
             preparedStatment.setString(2, t.getIp());
             preparedStatment.setString(3, t.getDes());
-            preparedStatment.setString(4, t.getAlarm_type());
 
             preparedStatment.executeUpdate();
 
@@ -74,15 +119,14 @@ public class NodesDAO implements DAO<Nodes> {
     @Override
     public boolean update(Nodes t) {
         boolean operationSuccess = true;
-        String sqlCommand = "update nodes set name = ?, ip = ?, des = ?, alarm_type = ?"
+        String sqlCommand = "update nodes set name = ?, ip = ?, des = ?"
                 + " where id = ?";
 
         try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
             preparedStatment.setString(1, t.getName());
             preparedStatment.setString(2, t.getIp());
             preparedStatment.setString(3, t.getDes());
-            preparedStatment.setString(4, t.getAlarm_type());
-            preparedStatment.setInt(5, t.getId());
+            preparedStatment.setInt(4, t.getId());
 
             preparedStatment.executeUpdate();
 
