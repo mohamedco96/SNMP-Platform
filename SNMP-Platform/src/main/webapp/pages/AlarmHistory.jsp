@@ -1,15 +1,14 @@
 <%-- 
-    Document   : index
-    Created on : Jun 7, 2020, 9:05:33 AM
+    Document   : AlramHistory
+    Created on : Jun 19, 2020, 12:10:16 PM
     Author     : moham
 --%>
 
-<%@page import="java.util.Vector"%>
-<%@page import="com.snmp.entities.Nodes"%>
-<%@page import="com.snmp.daos.NodesDAO"%>
-<%@page import="com.snmp.entities.Users"%>
+<%@page import="com.snmp.entities.Alarms"%>
+<%@page import="com.snmp.daos.AlarmsDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.snmp.daos.UsersDAO"%>
+<%@page import="com.snmp.entities.Users"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -22,10 +21,10 @@
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
         <!-- Bootstrap core CSS -->
-        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
-        <link href="./css/mdb.min.css" rel="stylesheet">
-        <link href="./css/style.min.css" rel="stylesheet">
+        <link href="../css/mdb.min.css" rel="stylesheet">
+        <link href="../css/style.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -44,11 +43,6 @@
         .py-5 {
             margin-bottom: 100px;
         }
-
-        .btn-primary {
-            background-color: #ffffff!important;
-            color: #343a40;
-        }
     </style>
 
     <body class="grey lighten-3">
@@ -57,18 +51,17 @@
             <!-- Sidebar -->
             <div class="sidebar-fixed position-fixed">
                 <a class="logo-wrapper waves-effect">
-                    <img src="./img/logo.png" class="img-fluid" alt="">
+                    <img src="../img/logo.png" class="img-fluid" alt="">
                 </a>
                 <div class="list-group list-group-flush">
-                    <a href="index.jsp" class="list-group-item active waves-effect">
+                    <a href="../index.jsp" class="list-group-item active waves-effect">
                         <i class="fas fa-chart-pie mr-3"></i>Dashboard
                     </a>
-                    <a href="./pages/adminList.jsp" class="list-group-item list-group-item-action waves-effect">
+                    <a href="./adminList.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-user mr-3"></i>List of Admins</a>
 
-                    <a href="./pages/Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
+                    <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-
 
                 </div>
             </div>
@@ -80,19 +73,13 @@
         <main class="pt-5 mx-lg-5">
             <!--Navbar -->
             <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-                <a class="navbar-brand" href="./index.jsp">Dashboard</a>
+                <a class="navbar-brand" href="../index.jsp">Dashboard</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
-
-
-                        <%Cookie ck[] = request.getCookies();
-//                            System.out.println("####" + ck[1].getName());
-                        %>
-
                         <li class="nav-item active">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#login">
                                 <i class="fas fa-sign-in-alt"></i> Login
@@ -103,52 +90,73 @@
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
                                 <i class="fas fa-user-plus"></i> Add Admin</a>
                         </li>
-                        <%
-                            if (ck[1].getValue().equals("yes")) {
-                        %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
-                                <i class="fas fa-user-plus"></i>Sign Out</a>
-                        </li>
-                        <%}%>
+
                     </ul>
                 </div>
             </nav>
 
             <%
-                UsersDAO usersDAO = new UsersDAO();
-                NodesDAO NodesDAO = new NodesDAO();
-
-                ArrayList<Users> listOfUsers = usersDAO.getAll();
-                ArrayList<Nodes> listOfNodes = NodesDAO.getAll();
-                ArrayList<Nodes> listOfActiveNode = NodesDAO.ActiveNode();
-                ArrayList<Nodes> listOfDeactivateNode = NodesDAO.DeactivateNode();
+                AlarmsDAO alarmsDAO = new AlarmsDAO();
+                ArrayList<Alarms> listOfAlarms = alarmsDAO.AlarmsHistory(request.getParameter("node_id"));
             %>
-            <!-- Counter -->
-            <div class="container" style="margin-top: 50px">
-                <div class="row">
-                    <div class="four col-md-3">
-                        <div class="counter-box "> <i class="fa fa-user"></i> <span class="counter"><%=listOfUsers.size()%></span>
-                            <p>Admins</p>
-                        </div>
-                    </div>
-                    <div class="four col-md-3">
-                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfNodes.size()%></span>
-                            <p>Nodes</p>
-                        </div>
-                    </div>
-                    <div class="four col-md-3">
-                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfActiveNode.size()%></span>
-                            <p>Active Nodes</p>
-                        </div>
-                    </div>
-                    <div class="four col-md-3">
-                        <div class="counter-box"> <i class="fa fa-user"></i> <span class="counter"><%=listOfDeactivateNode.size()%></span>
-                            <p>Deactivate Nodes</p>
-                        </div>
+
+            <!-- Table with panel -->
+            <div class="card card-cascade narrower" style="margin-top: 50px">
+                <!--Card image-->
+                <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center rounded text-center">
+                    <p href="" class="white-text mx-3">Alarms History</p>
+                </div>
+                <!--/Card image-->
+                <div class="px-4">
+                    <div class="table-wrapper">
+                        <!--Table-->
+                        <table class="table table-hover mb-0">
+                            <!--Table head-->
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+                                    <th class="th-lg">
+                                        Node ID
+                                    </th>
+                                    <th class="th-lg">
+                                        Alarm Type
+                                    </th>
+                                    <th class="th-lg">
+                                        OID	
+                                    </th>
+                                    <th class="th-lg">
+                                        Description
+                                    </th>
+                                    <th class="th-lg">
+                                        status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <!--Table head-->
+                            <!--Table body-->
+                            <tbody>
+                                <%
+                                    for (Alarms alarm : listOfAlarms) {
+                                %>
+                                <tr>
+                                    <th scope="row"><%=alarm.getId()%></th>
+                                    <td><%=alarm.getNode_id()%></td>
+                                    <td><%=alarm.getAlarm_type()%></td>
+                                    <td><%=alarm.getOid()%></td>
+                                    <td><%=alarm.getDes()%></td>
+                                    <td><%=alarm.isStatus()%></td>
+                                </tr>
+                                <% }%> 
+                            </tbody>
+                            <!--Table body-->
+                        </table>
+                        <!--Table-->
                     </div>
                 </div>
             </div>
+            <!-- Table with panel -->
 
             <!-- Login Modal -->
             <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -162,17 +170,17 @@
                         </div>
                         <div class="modal-body">
                             <!-- Default form login -->
-                            <form class="text-center border border-light p-5" action="./addAdmin" method="POST">
+                            <form class="text-center border border-light p-5" action="#!">
 
                                 <p class="h4 mb-4">Sign in</p>
 
                                 <!-- Email -->
-                                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="User name" name="uname">
+                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
 
                                 <!-- Password -->
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="passwd">
+                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
 
-                                <input type="hidden" name="operation" value="login">
+
 
                                 <!-- Sign in button -->
                                 <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
@@ -197,33 +205,33 @@
                         </div>
                         <div class="modal-body">
                             <!-- Default form register -->
-                            <form class="text-center border border-light p-5" action="./addAdmin" method="POST">
+                            <form class="text-center border border-light p-5" action="#!">
 
                                 <p class="h4 mb-4">Sign up</p>
 
                                 <div class="form-row mb-4">
                                     <div class="col">
                                         <!-- First name -->
-                                        <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name" name="fname">
+                                        <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
                                     </div>
                                     <div class="col">
                                         <!-- Last name -->
-                                        <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name" name="lname">
+                                        <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
                                     </div>
                                 </div>
 
                                 <!-- user name -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="User Name" name="uname">
+                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="User Name">
 
                                 <!-- E-mail -->
-                                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" name="email">
+                                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
 
                                 <!-- PHONE -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phone Number" name="phone">
+                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phone Number">
 
                                 <!-- Password -->
-                                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" name="passwd">
-                                <input type="hidden" name="operation" value="addAdmin">
+                                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+
                                 <!-- Sign up button -->
                                 <button class="btn btn-info my-4 btn-block" type="submit">Sign UP</button>
 
@@ -232,67 +240,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <div class="row row-cols-1 row-cols-md-3" style="margin-top: 50px">
-                <%
-                    for (Nodes node : listOfNodes) {
-                %>
-
-                <%
-                    if (node.isStatus() == false) {
-                %>
-                <!-- Card -->
-                <div class="col mb-4">
-                    <div class="card text-white bg-success mb-4" style="max-width: 20rem;">
-                        <div class="card-header"><%=node.getName()%></div>
-                        <div class="card-body">
-                            <h5 class="card-title"><%=node.getIp()%></h5>
-                            <p class="card-text text-white"><%=node.getDes()%></p>
-                        </div>
-                        <div class="card-footer text-muted text-center mt-4">
-                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
-                            <form  action="./pages/AlarmHistory.jsp" method="POST">
-                                <input type="hidden" name="node_id" value="<%=node.getId()%>">
-                                <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <%}%>
-
-                <%
-                    if (node.isStatus() == true) {
-                %>
-                <!-- Card -->
-                <div class="col mb-4">
-                    <div class="card text-white bg-danger mb-4" style="max-width: 20rem;">
-                        <div class="card-header"><%=node.getName()%></div>
-                        <div class="card-body">
-                            <h5 class="card-title"><%=node.getIp()%></h5>
-                            <p class="card-text text-white"><%=node.getDes()%></p>
-                        </div>
-                        <div class="card-footer text-muted text-center mt-4">
-                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
-                            <div class="d-flex justify-content-center">
-                                <form  action="./pages/viewAlarms.jsp" method="POST">
-                                    <input type="hidden" name="node_id" value="<%=node.getId()%>">
-                                    <button class="btn btn-primary btn-md" type="submit">View Alarms</button>
-                                </form>
-                                <form  action="./pages/AlarmHistory.jsp" method="POST">
-                                    <input type="hidden" name="node_id" value="<%=node.getId()%>">
-                                    <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <%}%>
-
-                <%}%>
             </div>
 
         </main>
@@ -342,23 +289,7 @@
             <!--/.Copyright-->
         </footer>
         <!--/.Footer-->
-        <script>
-            $(document).ready(function () {
-
-                $('.counter').each(function () {
-                    $(this).prop('Counter', 0).animate({
-                        Counter: $(this).text()
-                    }, {
-                        duration: 4000,
-                        easing: 'swing',
-                        step: function (now) {
-                            $(this).text(Math.ceil(now));
-                        }
-                    });
-                });
-
-            });
-        </script>
         <!-- SCRIPTS -->
     </body>
 </html>
+

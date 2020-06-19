@@ -25,16 +25,17 @@ private final Connection conn = Database.getConnection();
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public ArrayList<Alarms> getAll() {
+    
+    public ArrayList<Alarms> AlarmsHistory(String node_id) {
         ArrayList<Alarms> allAlarms = new ArrayList<>();
-        String customerJoinRatePlanQuery = "select * from alarms";
+        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + "";
 //        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
 
         try (Statement stmt1 = conn.createStatement();) {
             ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
             while (rs1.next()) {
                 Alarms alarms = new Alarms();
+                alarms.setId(rs1.getInt("id"));
                 alarms.setNode_id(rs1.getInt("node_id"));
                 alarms.setAlarm_type(rs1.getString("alarm_type"));
                 alarms.setOid(rs1.getString("oid"));
@@ -49,7 +50,32 @@ private final Connection conn = Database.getConnection();
         }
         return allAlarms;
     }
+    
+    public ArrayList<Alarms> ViewAlarms(String node_id) {
+        ArrayList<Alarms> allAlarms = new ArrayList<>();
+        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + " and status=true";
+//        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
 
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Alarms alarms = new Alarms();
+                alarms.setId(rs1.getInt("id"));
+                alarms.setNode_id(rs1.getInt("node_id"));
+                alarms.setAlarm_type(rs1.getString("alarm_type"));
+                alarms.setOid(rs1.getString("oid"));
+                alarms.setDes(rs1.getString("des"));
+                alarms.setStatus(rs1.getBoolean("status"));
+               
+
+                allAlarms.add(alarms);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### Alarms get all faild: \n" + ex.getMessage());
+        }
+        return allAlarms;
+    }
+    
     @Override
     public boolean save(Alarms t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -62,6 +88,11 @@ private final Connection conn = Database.getConnection();
 
     @Override
     public boolean delete(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Alarms> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

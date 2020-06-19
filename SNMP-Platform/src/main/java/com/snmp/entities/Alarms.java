@@ -11,11 +11,20 @@ package com.snmp.entities;
  */
 public class Alarms {
 
+    private int id;
     private int node_id;
     private String alarm_type;
     private String oid;
     private String des;
     private boolean status;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getNode_id() {
         return node_id;
