@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class DataBase {
 
-    private final String url = "jdbc:postgresql://localhost:5544/snmp";
+    private final String url = "jdbc:postgresql://localhost:5432/snmp";
     private final String user = "postgres";
-    private final String password = "mohamed";
+    private final String password = "1";
     private Connection connection;
     private String sqlcommand;
     private PreparedStatement preparedstatement;

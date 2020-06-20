@@ -53,7 +53,7 @@ private final Connection conn = Database.getConnection();
     
     public ArrayList<Alarms> ViewAlarms(String node_id) {
         ArrayList<Alarms> allAlarms = new ArrayList<>();
-        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + " and status=true";
+        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + " and status=true order by id";
 //        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
 
         try (Statement stmt1 = conn.createStatement();) {

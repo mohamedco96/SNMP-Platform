@@ -7,6 +7,7 @@ package com.snmp.daos;
 
 import com.snmp.database.Database;
 import com.snmp.entities.Action;
+import com.snmp.entities.Alarms;
 import com.snmp.entities.Nodes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,7 +95,7 @@ public class ActionDAO implements DAO<Action> {
         }
         return operationSuccess;
     }
-    
+
     public boolean deleteAction(Action t) {
         boolean operationSuccess = true;
         String sqlCommand = "delete from action where id=?";
@@ -109,7 +110,30 @@ public class ActionDAO implements DAO<Action> {
         }
         return operationSuccess;
     }
-    
+
+    public ArrayList<Action> ActionByID(String node_id, String Alarm_type) {
+        ArrayList<Action> allAction = new ArrayList<>();
+        System.out.println(Alarm_type);
+        String customerJoinRatePlanQuery = "select * from action where node_id=" + node_id + " order by id";
+//        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
+
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Action action = new Action();
+                action.setId(rs1.getInt("id"));
+                action.setNode_id(rs1.getInt("node_id"));
+                action.setAlarm_type(rs1.getString("alarm_type"));
+                action.setAction(rs1.getString("action"));
+
+                allAction.add(action);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### ActionByID faild: \n" + ex.getMessage());
+        }
+        return allAction;
+    }
+
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

@@ -1,11 +1,15 @@
 <%-- 
-    Document   : nodes
-    Created on : Jun 16, 2020, 8:04:21 PM
+    Document   : MakeAction
+    Created on : Jun 20, 2020, 8:44:44 PM
     Author     : moham
 --%>
 
 <%@page import="com.snmp.entities.Nodes"%>
 <%@page import="com.snmp.daos.NodesDAO"%>
+<%@page import="com.snmp.entities.Action"%>
+<%@page import="com.snmp.daos.ActionDAO"%>
+<%@page import="com.snmp.entities.Alarms"%>
+<%@page import="com.snmp.daos.AlarmsDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.snmp.daos.UsersDAO"%>
 <%@page import="com.snmp.entities.Users"%>
@@ -43,10 +47,6 @@
         .py-5 {
             margin-bottom: 100px;
         }
-        
-        .card{
-            margin-top: 50px;
-        }
     </style>
 
     <body class="grey lighten-3">
@@ -66,8 +66,8 @@
 
                     <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-                        
-                        <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
+
+                    <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
                 </div>
             </div>
@@ -84,66 +84,50 @@
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
             </nav>
 
+            <%
+                AlarmsDAO alarmsDAO = new AlarmsDAO();
+                ActionDAO actionDAO = new ActionDAO();
+                NodesDAO nodesDAO = new NodesDAO();
 
-            <div id="success"></div>
-            <div id="delete"></div>
+                ArrayList<Alarms> listOfAlarms = alarmsDAO.ViewAlarms(request.getParameter("node_id"));
+                ArrayList<Action> listOfActions = actionDAO.ActionByID(request.getParameter("node_id"),request.getParameter("Alarm_type"));
+                ArrayList<Nodes> listOfNodes = nodesDAO.NodesByID(request.getParameter("node_id"));
+             
+            %>
 
-            <!--Card-->
-            <div class="card">
-                <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Nodes</h3>
+            <form  action="./RunAction.jsp" method="POST">
 
-                <!--Card content-->
-                <div class="card-body">
+                <p class="h4 mb-4 text-center">Make Action</p>
+                <%
+                    for (int i = 0; i < listOfNodes.size(); i++) {
+                %>
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Node Name" name="node_name" value="<%=listOfNodes.get(i).getName()%>">
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Node IP" name="node_ip" value="<%=listOfNodes.get(i).getIp()%>">
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Status" name="status" value="<%=listOfNodes.get(i).isStatus()%>">
+                <%}%>
 
-                    <div id="table" class="table-editable">
-                        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
-                        <table class="table table-bordered table-responsive-md table-striped text-center">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">IP</th>
-                                    <th class="text-center">Description</th>
-                                    <th class="text-center">Submit</th>
-                                    <th class="text-center">Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    NodesDAO nodesDao = new NodesDAO();
-                                    ArrayList<Nodes> allNodes = nodesDao.getAll();
-//                                           
-                                    for (int i = 0; i < allNodes.size(); i++) {
-                                %>
-                                <tr id="<%=allNodes.get(i).getId()%>">
-                                    <td class="pt-3-half"><%=i + 1%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getName()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getIp()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getDes()%></td>
-                                    <td>
-                                        <span class="table-submit"><button type="button"
-                                                                           class="btn btn-primary btn-rounded btn-sm my-0">Submit</button></span>
-                                    </td>
-                                    <td>
-                                        <span class="table-remove"><button type="button"
-                                                                           class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
-                                    </td>
-                                </tr>
-                                <%}%>
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Alarm Type" name="Alarm_type" value="<%=request.getParameter("Alarm_type")%>">
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="OID" name="oid" value="<%=request.getParameter("oid")%>">
 
-                            </tbody>
-                        </table>
-                        <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
-                    </div>
 
-                </div>
-            </div>
 
+                <select class="browser-default custom-select mb-4" name="action">
+                    <option selected>Actions</option>
+                    <%
+                        for (int i = 0; i < listOfActions.size(); i++) {
+                    %>
+                    <option value="<%=listOfActions.get(i).getAction()%>"><%=listOfActions.get(i).getAction()%></option>
+                    <%}%>
+                </select>
+
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Email" name="email">
+                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Phone Number" name="phone">
+
+                <button class="btn btn-info btn-block my-4" type="submit">submit</button>
+            </form>
 
         </main>
         <!--Main layout-->
@@ -192,7 +176,6 @@
             <!--/.Copyright-->
         </footer>
         <!--/.Footer-->
-        <script src="../js/nodes.js"></script>
         <!-- SCRIPTS -->
     </body>
 </html>

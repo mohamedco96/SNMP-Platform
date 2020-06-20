@@ -53,6 +53,30 @@ public class NodesDAO implements DAO<Nodes> {
         return allNodes;
     }
     
+    public ArrayList<Nodes> NodesByID(String node_id) {
+        ArrayList<Nodes> allNodes = new ArrayList<>();
+        String customerJoinRatePlanQuery = "select * from nodes where id=" + node_id + "";
+//        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
+
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Nodes node = new Nodes();
+                node.setId(rs1.getInt("id"));
+                node.setName(rs1.getString("name"));
+                node.setIp(rs1.getString("ip"));
+                node.setDes(rs1.getString("des"));
+//                node.setAlarm_type(rs1.getString("alarm_type"));
+                node.setStatus(rs1.getBoolean("status"));
+                
+
+                allNodes.add(node);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### NodesByID faild: \n" + ex.getMessage());
+        }
+        return allNodes;
+    }
     public ArrayList<Nodes> ActiveNode() {
         ArrayList<Nodes> allNodes = new ArrayList<>();
         String customerJoinRatePlanQuery = "select * from nodes where status=false";

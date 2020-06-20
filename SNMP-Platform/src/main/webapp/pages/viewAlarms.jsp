@@ -62,8 +62,8 @@
 
                     <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-                        
-                        <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
+
+                    <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
                 </div>
             </div>
@@ -80,21 +80,7 @@
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#login">
-                                <i class="fas fa-sign-in-alt"></i> Login
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
-                                <i class="fas fa-user-plus"></i> Add Admin</a>
-                        </li>
 
-                    </ul>
-                </div>
             </nav>
 
             <%
@@ -149,6 +135,14 @@
                                     <td><%=alarm.getOid()%></td>
                                     <td><%=alarm.getDes()%></td>
                                     <td><%=alarm.isStatus()%></td>
+                                    <td>
+                                        <form  action="./MakeAction.jsp" method="POST">
+                                            <input type="hidden" name="node_id" value="<%=alarm.getNode_id()%>">
+                                            <input type="hidden" name="Alarm_type" value="<%=alarm.getAlarm_type()%>">
+                                            <input type="hidden" name="oid" value="<%=alarm.getOid()%>">
+                                            <button class="btn btn-primary btn-md " type="submit">Make Action</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <% }%> 
                             </tbody>
@@ -160,89 +154,7 @@
             </div>
             <!-- Table with panel -->
 
-            <!-- Login Modal -->
-            <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
 
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Default form login -->
-                            <form class="text-center border border-light p-5" action="#!">
-
-                                <p class="h4 mb-4">Sign in</p>
-
-                                <!-- Email -->
-                                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
-
-                                <!-- Password -->
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
-
-
-
-                                <!-- Sign in button -->
-                                <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
-
-
-                            </form>
-                            <!-- Default form login -->
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Register Modal -->
-            <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Default form register -->
-                            <form class="text-center border border-light p-5" action="#!">
-
-                                <p class="h4 mb-4">Sign up</p>
-
-                                <div class="form-row mb-4">
-                                    <div class="col">
-                                        <!-- First name -->
-                                        <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <!-- Last name -->
-                                        <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
-                                    </div>
-                                </div>
-
-                                <!-- user name -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="User Name">
-
-                                <!-- E-mail -->
-                                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
-
-                                <!-- PHONE -->
-                                <input type="text" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="Phone Number">
-
-                                <!-- Password -->
-                                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-
-                                <!-- Sign up button -->
-                                <button class="btn btn-info my-4 btn-block" type="submit">Sign UP</button>
-
-                            </form>
-                            <!-- Default form register -->
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </main>
         <!--Main layout-->
