@@ -1,0 +1,6 @@
+com\mycompany\client_gui\FXMLController.class
+com\iti\snmp_client\SnmpTrapInfo.class
+com\iti\snmp_client\SnmpTrapTypes.class
+com\mycompany\client_gui\MainApp.class
+com\iti\snmp_client\TrapSender.class
+com\iti\snmp_client\IssueInfo.class
