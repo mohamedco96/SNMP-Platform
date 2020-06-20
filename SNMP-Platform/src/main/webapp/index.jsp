@@ -68,6 +68,9 @@
 
                     <a href="./pages/Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
+                        
+                    <a href="./pages/action.jsp" class="list-group-item list-group-item-action waves-effect">
+                        <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
 
 
                 </div>
@@ -279,10 +282,12 @@
                             <div class="d-flex justify-content-center">
                                 <form  action="./pages/viewAlarms.jsp" method="POST">
                                     <input type="hidden" name="node_id" value="<%=node.getId()%>">
+                                    <input type="hidden" name="node_name" value="<%=node.getName()%>">
                                     <button class="btn btn-primary btn-md" type="submit">View Alarms</button>
                                 </form>
                                 <form  action="./pages/AlarmHistory.jsp" method="POST">
                                     <input type="hidden" name="node_id" value="<%=node.getId()%>">
+                                    <input type="hidden" name="node_name" value="<%=node.getName()%>">
                                     <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
                                 </form>
                             </div>

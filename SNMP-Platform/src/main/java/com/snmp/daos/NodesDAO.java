@@ -55,7 +55,7 @@ public class NodesDAO implements DAO<Nodes> {
     
     public ArrayList<Nodes> ActiveNode() {
         ArrayList<Nodes> allNodes = new ArrayList<>();
-        String customerJoinRatePlanQuery = "select * from nodes where status=true";
+        String customerJoinRatePlanQuery = "select * from nodes where status=false";
 
         try (Statement stmt1 = conn.createStatement();) {
             ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
@@ -78,7 +78,7 @@ public class NodesDAO implements DAO<Nodes> {
     
     public ArrayList<Nodes> DeactivateNode() {
         ArrayList<Nodes> allNodes = new ArrayList<>();
-        String customerJoinRatePlanQuery = "select * from nodes where status=false";
+        String customerJoinRatePlanQuery = "select * from nodes where status=true";
 
         try (Statement stmt1 = conn.createStatement();) {
             ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);

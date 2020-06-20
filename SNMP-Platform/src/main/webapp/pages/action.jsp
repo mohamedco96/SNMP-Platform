@@ -1,9 +1,11 @@
 <%-- 
-    Document   : nodes
-    Created on : Jun 16, 2020, 8:04:21 PM
+    Document   : action
+    Created on : Jun 20, 2020, 10:09:47 AM
     Author     : moham
 --%>
 
+<%@page import="com.snmp.entities.Action"%>
+<%@page import="com.snmp.daos.ActionDAO"%>
 <%@page import="com.snmp.entities.Nodes"%>
 <%@page import="com.snmp.daos.NodesDAO"%>
 <%@page import="java.util.ArrayList"%>
@@ -43,7 +45,7 @@
         .py-5 {
             margin-bottom: 100px;
         }
-        
+
         .card{
             margin-top: 50px;
         }
@@ -107,7 +109,7 @@
 
             <!--Card-->
             <div class="card">
-                <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Nodes</h3>
+                <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Action</h3>
 
                 <!--Card content-->
                 <div class="card-body">
@@ -119,25 +121,27 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">IP</th>
-                                    <th class="text-center">Description</th>
+                                    <th class="text-center">Node ID</th>
+                                    <th class="text-center">Alarm Type</th>
+                                    <th class="text-center">Action</th>
+                                    <th class="text-center">Date</th>
                                     <th class="text-center">Submit</th>
                                     <th class="text-center">Remove</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%
-                                    NodesDAO nodesDao = new NodesDAO();
-                                    ArrayList<Nodes> allNodes = nodesDao.getAll();
+                                    ActionDAO actionDAO = new ActionDAO();
+                                    ArrayList<Action> allAction = actionDAO.getAll();
 //                                           
-                                    for (int i = 0; i < allNodes.size(); i++) {
+                                    for (int i = 0; i < allAction.size(); i++) {
                                 %>
-                                <tr id="<%=allNodes.get(i).getId()%>">
+                                <tr id="<%=allAction.get(i).getId()%>">
                                     <td class="pt-3-half"><%=i + 1%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getName()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getIp()%></td>
-                                    <td class="pt-3-half" contenteditable="true"><%=allNodes.get(i).getDes()%></td>
+                                    <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getNode_id()%></td>
+                                    <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getAlarm_type()%></td>
+                                    <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getAction()%></td>
+                                    <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getDate()%></td>
                                     <td>
                                         <span class="table-submit"><button type="button"
                                                                            class="btn btn-primary btn-rounded btn-sm my-0">Submit</button></span>
@@ -206,7 +210,7 @@
             <!--/.Copyright-->
         </footer>
         <!--/.Footer-->
-        <script src="../js/nodes.js"></script>
+        <script src="../js/action.js"></script>
         <!-- SCRIPTS -->
     </body>
 </html>

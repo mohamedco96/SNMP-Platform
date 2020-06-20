@@ -62,7 +62,9 @@
 
                     <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-
+                        
+                        <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
+                        <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
                 </div>
             </div>
             <!-- Sidebar -->
@@ -104,7 +106,7 @@
             <div class="card card-cascade narrower" style="margin-top: 50px">
                 <!--Card image-->
                 <div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center rounded text-center">
-                    <p href="" class="white-text mx-3">Alarms History</p>
+                    <p href="" class="white-text mx-3">Alarms for <%=request.getParameter("node_name")%> </p>
                 </div>
                 <!--/Card image-->
                 <div class="px-4">

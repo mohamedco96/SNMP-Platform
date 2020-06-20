@@ -61,7 +61,9 @@
 
                     <a href="./Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-
+                        
+                        <a href="./action.jsp" class="list-group-item list-group-item-action waves-effect">
+                        <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
                 </div>
             </div>
             <!-- Sidebar -->
