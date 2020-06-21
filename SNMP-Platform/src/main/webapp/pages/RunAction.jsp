@@ -24,7 +24,7 @@
     nxSms sms = new nxSms();
     RunScript run =new RunScript();
 
-    if (request.getParameter("action").equals("Email")) {
+    if (request.getParameter("action").equals("email")) {
         e.sendMail(request.getParameter("email"), "We found Alarm type is " + request.getParameter("Alarm_type"));
         System.out.println("Email is send to " + request.getParameter("email"));
         response.sendRedirect("../index.jsp");

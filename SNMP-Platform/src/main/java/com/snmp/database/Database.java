@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class Database {
 
-    private static final String url = "jdbc:postgresql://localhost:5432/snmp";
-    private static final String user = "postgres";
-    private static final String password = "1";
+    private static final String url = "jdbc:postgresql://rogue.db.elephantsql.com:5432/gcfnairp";
+    private static final String user = "gcfnairp";
+    private static final String password = "Le7UbRU3FwVaAMZdGPFGCYwsCj63_Zm1";
     private static Connection conn = null;
 //    private static Database database = null;
 
