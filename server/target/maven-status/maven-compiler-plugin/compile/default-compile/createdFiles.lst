@@ -1,6 +1,0 @@
-com\mycompany\server\DataBase.class
-com\iti\snmp_client\SnmpTrapInfo.class
-com\mycompany\server\SNMPManager.class
-com\iti\snmp_client\TrapSender.class
-com\iti\snmp_client\IssueInfo.class
-com\iti\snmp_client\SnmpTrapTypes.class
