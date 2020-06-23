@@ -143,6 +143,12 @@
                                             <button class="btn btn-primary btn-md " type="submit">Make Action</button>
                                         </form>
                                     </td>
+                                    <td>
+                                        <form  action="../AlarmUpdateServlet" method="POST">
+                                            <input type="hidden" name="id" value="<%=alarm.getId()%>">
+                                            <button class="btn btn-primary btn-md " type="submit">Clear Alarm</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <% }%> 
                             </tbody>

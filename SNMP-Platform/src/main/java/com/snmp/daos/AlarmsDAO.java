@@ -9,6 +9,7 @@ import com.snmp.database.Database;
 import com.snmp.entities.Alarms;
 import com.snmp.entities.Users;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,13 +20,17 @@ import java.util.ArrayList;
  * @author moham
  */
 public class AlarmsDAO implements DAO<Alarms> {
-private final Connection conn = Database.getConnection();
+
+    private final Connection conn = Database.getConnection();
+    
+   
+   
+   
     @Override
     public Alarms get(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     public ArrayList<Alarms> AlarmsHistory(String node_id) {
         ArrayList<Alarms> allAlarms = new ArrayList<>();
         String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + "";
@@ -41,7 +46,6 @@ private final Connection conn = Database.getConnection();
                 alarms.setOid(rs1.getString("oid"));
                 alarms.setDes(rs1.getString("des"));
                 alarms.setStatus(rs1.getBoolean("status"));
-               
 
                 allAlarms.add(alarms);
             }
@@ -50,7 +54,7 @@ private final Connection conn = Database.getConnection();
         }
         return allAlarms;
     }
-    
+
     public ArrayList<Alarms> ViewAlarms(String node_id) {
         ArrayList<Alarms> allAlarms = new ArrayList<>();
         String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + " and status=true order by id";
@@ -66,7 +70,6 @@ private final Connection conn = Database.getConnection();
                 alarms.setOid(rs1.getString("oid"));
                 alarms.setDes(rs1.getString("des"));
                 alarms.setStatus(rs1.getBoolean("status"));
-               
 
                 allAlarms.add(alarms);
             }
@@ -75,7 +78,7 @@ private final Connection conn = Database.getConnection();
         }
         return allAlarms;
     }
-    
+
     @Override
     public boolean save(Alarms t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -83,7 +86,20 @@ private final Connection conn = Database.getConnection();
 
     @Override
     public boolean update(Alarms t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean operationSuccess = true;
+        String sqlCommand = "update alarms set status = false"
+                + " where id = ?";
+
+        try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
+            preparedStatment.setInt(1, t.getId());
+
+            preparedStatment.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("##### alarms Update faild: \n" + ex.getMessage());
+            operationSuccess = false;
+        }
+        return operationSuccess;
     }
 
     @Override
