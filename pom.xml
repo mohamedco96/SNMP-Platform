@@ -21,7 +21,7 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-	<dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.12</version>
@@ -100,9 +100,22 @@
                     <execution>
                         <id>copy-dependencies</id>
                         <phase>package</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <appName>snmp-iti</appName>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* --port $PORT target/*.war</web>
+                    </processTypes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

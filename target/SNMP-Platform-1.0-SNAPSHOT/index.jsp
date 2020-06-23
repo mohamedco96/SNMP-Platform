@@ -92,10 +92,6 @@
                     <ul class="navbar-nav ml-auto">
 
 
-                        <%Cookie ck[] = request.getCookies();
-//                            System.out.println("####" + ck[1].getName());
-                        %>
-
                         <li class="nav-item active">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#login">
                                 <i class="fas fa-sign-in-alt"></i> Login
@@ -106,14 +102,10 @@
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
                                 <i class="fas fa-user-plus"></i> Add Admin</a>
                         </li>
-                        <%
-                            if (ck[1].getValue().equals("yes")) {
-                        %>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
                                 <i class="fas fa-user-plus"></i>Sign Out</a>
-                        </li>
-                        <%}%>
+                        </li>-->
                     </ul>
                 </div>
             </nav>

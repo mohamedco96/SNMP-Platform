@@ -86,53 +86,9 @@
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#MakeAction">
-                                <i class="fas fa-magic"></i>Make Action</a>
-                        </li>
-
-                    </ul>
-                </div>
+               
             </nav>
 
-
-            <!-- Action Modal -->
-            <div class="modal fade" id="MakeAction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Default form login -->
-                            <form class="text-center border border-light p-5" action="./addAdmin" method="POST">
-
-                                <p class="h4 mb-4">Make Action</p>
-
-                                <!-- Email -->
-                                <input type="text" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="User name" name="uname">
-
-                                <!-- Password -->
-                                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="passwd">
-
-                                <input type="hidden" name="operation" value="login">
-
-                                <!-- Sign in button -->
-                                <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
-
-
-                            </form>
-                            <!-- Default form login -->
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
             <div id="success"></div>
             <div id="delete"></div>
