@@ -79,7 +79,7 @@ private ResultSet result = null;
             result = preparedStatment.executeQuery();
 
             while (result.next()) {
-                operationSuccess = result.getBoolean(1);
+                operationSuccess = true;
             }
         } catch (SQLException ex) {
             System.out.println("##### user login faild: \n" + ex.getMessage());

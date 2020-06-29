@@ -4,6 +4,8 @@
     Author     : moham
 --%>
 
+<%@page import="com.snmp.entities.Alarms"%>
+<%@page import="com.snmp.daos.AlarmsDAO"%>
 <%@page import="java.util.Vector"%>
 <%@page import="com.snmp.entities.Nodes"%>
 <%@page import="com.snmp.daos.NodesDAO"%>
@@ -37,9 +39,19 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/e46fb9d55b.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+
+        <script src="./js/Chart.min.js"></script>
+        <script src="./js/utils.js"></script>
     </head>
 
+
+
     <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
         .pt-5,
         .py-5 {
             margin-bottom: 100px;
@@ -68,7 +80,7 @@
 
                     <a href="./pages/Nodes.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-server mr-3"></i>Nodes</a>
-                        
+
                     <a href="./pages/action.jsp" class="list-group-item list-group-item-action waves-effect">
                         <i class="fas fa-radiation-alt mr-3"></i>Actions</a>
 
@@ -102,10 +114,10 @@
                             <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
                                 <i class="fas fa-user-plus"></i> Add Admin</a>
                         </li>
-<!--                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
-                                <i class="fas fa-user-plus"></i>Sign Out</a>
-                        </li>-->
+                        <!--                        <li class="nav-item">
+                                                    <a class="nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#register">
+                                                        <i class="fas fa-user-plus"></i>Sign Out</a>
+                                                </li>-->
                     </ul>
                 </div>
             </nav>
@@ -113,6 +125,7 @@
             <%
                 UsersDAO usersDAO = new UsersDAO();
                 NodesDAO NodesDAO = new NodesDAO();
+                AlarmsDAO alarmsDAO = new AlarmsDAO();
 
                 ArrayList<Users> listOfUsers = usersDAO.getAll();
                 ArrayList<Nodes> listOfNodes = NodesDAO.getAll();
@@ -229,37 +242,25 @@
                 </div>
             </div>
 
+<!--            <div id="container" style="width: 75%;">
+                <canvas id="canvas"></canvas>
+            </div>
+            <button id="randomizeData">Randomize Data</button>
+            <button id="addDataset">Add Dataset</button>
+            <button id="removeDataset">Remove Dataset</button>
+            <button id="addData">Add Data</button>
+            <button id="removeData">Remove Data</button>-->
 
             <div class="row row-cols-1 row-cols-md-3" style="margin-top: 50px">
                 <%
                     for (Nodes node : listOfNodes) {
+                        Boolean flag = true;
+                        ArrayList<Alarms> listOfAlarms = alarmsDAO.ViewActiveAlarms(String.valueOf(node.getId()));
+                        for (Alarms alarms : listOfAlarms) {
                 %>
 
-                <%
-                    if (node.isStatus() == false) {
-                %>
-                <!-- Card -->
-                <div class="col mb-4">
-                    <div class="card text-white bg-success mb-4" style="max-width: 20rem;">
-                        <div class="card-header"><%=node.getName()%></div>
-                        <div class="card-body">
-                            <h5 class="card-title"><%=node.getIp()%></h5>
-                            <p class="card-text text-white"><%=node.getDes()%></p>
-                        </div>
-                        <div class="card-footer text-muted text-center mt-4">
-                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
-                            <form  action="./pages/AlarmHistory.jsp" method="POST">
-                                <input type="hidden" name="node_id" value="<%=node.getId()%>">
-                                <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card -->
-                <%}%>
-
-                <%
-                    if (node.isStatus() == true) {
+                <%                    if (alarms.isStatus() == true) {
+                        flag = false;
                 %>
                 <!-- Card -->
                 <div class="col mb-4">
@@ -282,13 +283,41 @@
                                     <input type="hidden" name="node_name" value="<%=node.getName()%>">
                                     <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
                                 </form>
+
                             </div>
+                                <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
+                                <form  action="./ClearAlarmServlet" method="POST">
+                                    <input type="hidden" name="node_id" value="<%=node.getId()%>">
+                                    <button class="btn btn-primary btn-md " type="submit">Clear Alarms</button>
+                                </form>
                         </div>
                     </div>
                 </div>
                 <!-- Card -->
                 <%}%>
-
+                <%}%>
+                <%
+                    if (flag == true) {
+                %>
+                <!-- Card -->
+                <div class="col mb-4">
+                    <div class="card text-white bg-success mb-4" style="max-width: 20rem;">
+                        <div class="card-header"><%=node.getName()%></div>
+                        <div class="card-body">
+                            <h5 class="card-title"><%=node.getIp()%></h5>
+                            <p class="card-text text-white"><%=node.getDes()%></p>
+                        </div>
+                        <div class="card-footer text-muted text-center mt-4">
+                            <!--<button type="button" class="btn btn-primary btn-md">Read more</button>-->
+                            <form  action="./pages/AlarmHistory.jsp" method="POST">
+                                <input type="hidden" name="node_id" value="<%=node.getId()%>">
+                                <button class="btn btn-primary btn-md " type="submit">Alarms History</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card -->
+                <%}%>
                 <%}%>
             </div>
 
@@ -339,6 +368,7 @@
             <!--/.Copyright-->
         </footer>
         <!--/.Footer-->
+
         <script>
             $(document).ready(function () {
 
@@ -357,5 +387,7 @@
             });
         </script>
         <!-- SCRIPTS -->
+        <script src="./js/chartData.js"></script>
+
     </body>
 </html>

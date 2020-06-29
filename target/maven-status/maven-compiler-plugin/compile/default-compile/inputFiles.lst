@@ -16,5 +16,6 @@ E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\entities\Users.java
 E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\servlets\NodeDeleteServlet.java
 E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\servlets\AlarmUpdateServlet.java
 E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\entities\Action.java
+E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\servlets\ClearAlarmServlet.java
 E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\daos\AlarmsDAO.java
 E:\ITI\GitHub\SNMP-Platform\src\main\java\com\snmp\messaging\nxSms.java

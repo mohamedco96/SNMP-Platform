@@ -17,7 +17,16 @@ public class Action {
     private int node_id;
     private String alarm_type;
     private String action;
+    private String des;
     private Date date;
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
 
     public int getId() {
         return id;

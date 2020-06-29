@@ -2,6 +2,7 @@ com\snmp\daos\DAO.class
 com\snmp\servlets\AdminUpdateServlet.class
 com\snmp\entities\Nodes.class
 com\snmp\servlets\ActionDeleteServlet.class
+com\snmp\servlets\ClearAlarmServlet.class
 com\snmp\daos\AlarmsDAO.class
 com\snmp\servlets\ActionUpdateServlet.class
 com\snmp\contextlisteners\DatabaseConnectionListener.class

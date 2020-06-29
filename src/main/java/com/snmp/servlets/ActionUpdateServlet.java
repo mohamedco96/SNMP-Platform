@@ -32,6 +32,7 @@ public class ActionUpdateServlet extends HttpServlet {
         action.setNode_id(Integer.parseInt(req.getParameter("NodeID")));
         action.setAlarm_type(req.getParameter("Alarm_type"));
         action.setAction(req.getParameter("action"));
+        action.setDes(req.getParameter("des"));
 //        action.setDate(req.getParameter("des"));
 //        nodeDao.save(node);
 

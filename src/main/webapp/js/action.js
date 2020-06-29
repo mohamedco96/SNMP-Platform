@@ -14,6 +14,7 @@ const newTr = `
   <td class="pt-3-half" contenteditable="true"></td>
   <td class="pt-3-half" contenteditable="true"></td>
   <td class="pt-3-half" contenteditable="true"></td>
+  <td class="pt-3-half" contenteditable="true"></td>
 
 
   <td>
@@ -63,6 +64,7 @@ $tableID.on('click', '.table-submit', function () {
     var NodeID = currentRow.find('td:eq(1)').text();
     var Alarm_type = currentRow.find('td:eq(2)').text();
     var action = currentRow.find('td:eq(3)').text();
+    var des = currentRow.find('td:eq(4)').text();
 //    var alarm_type = currentRow.find('td:eq(4)').text();
     //POST request
     $.post('../addAction', {
@@ -70,6 +72,7 @@ $tableID.on('click', '.table-submit', function () {
         NodeID: NodeID,
         Alarm_type: Alarm_type,
         action: action,
+        des: des,
 //        alarm_type: alarm_type
 
     },

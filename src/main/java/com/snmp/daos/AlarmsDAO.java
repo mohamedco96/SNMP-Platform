@@ -78,7 +78,31 @@ public class AlarmsDAO implements DAO<Alarms> {
         }
         return allAlarms;
     }
+    
+     public ArrayList<Alarms> ViewActiveAlarms(String node_id) {
+        ArrayList<Alarms> allAlarms = new ArrayList<>();
+        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + node_id + " and status=true limit 1";
+//        String customerJoinRatePlanQuery = "select * from alarms where node_id=" + id + "";
 
+        try (Statement stmt1 = conn.createStatement();) {
+            ResultSet rs1 = stmt1.executeQuery(customerJoinRatePlanQuery);
+            while (rs1.next()) {
+                Alarms alarms = new Alarms();
+                alarms.setId(rs1.getInt("id"));
+                alarms.setNode_id(rs1.getInt("node_id"));
+                alarms.setAlarm_type(rs1.getString("alarm_type"));
+                alarms.setOid(rs1.getString("oid"));
+                alarms.setDes(rs1.getString("des"));
+                alarms.setStatus(rs1.getBoolean("status"));
+
+                allAlarms.add(alarms);
+            }
+        } catch (SQLException ex) {
+            System.out.println("##### Alarms get all faild: \n" + ex.getMessage());
+        }
+        return allAlarms;
+    }
+     
     @Override
     public boolean save(Alarms t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -101,7 +125,24 @@ public class AlarmsDAO implements DAO<Alarms> {
         }
         return operationSuccess;
     }
+    
+    public boolean ClearAlarms(Alarms t) {
+        boolean operationSuccess = true;
+        String sqlCommand = "update alarms set status = false"
+                + " where node_id = ?";
 
+        try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
+            preparedStatment.setInt(1, t.getNode_id());
+
+            preparedStatment.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("##### alarms Update faild: \n" + ex.getMessage());
+            operationSuccess = false;
+        }
+        return operationSuccess;
+    }
+    
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

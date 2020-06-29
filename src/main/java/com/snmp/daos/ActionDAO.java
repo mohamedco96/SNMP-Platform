@@ -43,6 +43,7 @@ public class ActionDAO implements DAO<Action> {
                 action.setNode_id(rs1.getInt("node_id"));
                 action.setAlarm_type(rs1.getString("alarm_type"));
                 action.setAction(rs1.getString("action"));
+                action.setDes(rs1.getString("dis"));
                 action.setDate(rs1.getDate("date"));
 
                 allAction.add(action);
@@ -60,12 +61,13 @@ public class ActionDAO implements DAO<Action> {
 
     public void insert(Action t) {
         boolean operationSuccess = true;
-        String sqlCommand = " insert into action(node_id,alarm_type,action) values (?,?,?)";
+        String sqlCommand = " insert into action(node_id,alarm_type,action,dis) values (?,?,?,?)";
 
         try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
             preparedStatment.setInt(1, t.getNode_id());
             preparedStatment.setString(2, t.getAlarm_type());
             preparedStatment.setString(3, t.getAction());
+            preparedStatment.setString(4, t.getDes());
 
             preparedStatment.executeUpdate();
 
@@ -78,14 +80,15 @@ public class ActionDAO implements DAO<Action> {
     @Override
     public boolean update(Action t) {
         boolean operationSuccess = true;
-        String sqlCommand = "update action set node_id = ?, alarm_type = ?, action = ?"
+        String sqlCommand = "update action set node_id = ?, alarm_type = ?, action = ?, dis = ?"
                 + " where id = ?";
 
         try (PreparedStatement preparedStatment = conn.prepareStatement(sqlCommand)) {
             preparedStatment.setInt(1, t.getNode_id());
             preparedStatment.setString(2, t.getAlarm_type());
             preparedStatment.setString(3, t.getAction());
-            preparedStatment.setInt(4, t.getId());
+            preparedStatment.setString(4, t.getDes());
+            preparedStatment.setInt(5, t.getId());
 
             preparedStatment.executeUpdate();
 
@@ -125,6 +128,7 @@ public class ActionDAO implements DAO<Action> {
                 action.setNode_id(rs1.getInt("node_id"));
                 action.setAlarm_type(rs1.getString("alarm_type"));
                 action.setAction(rs1.getString("action"));
+                action.setDes(rs1.getString("dis"));
 
                 allAction.add(action);
             }

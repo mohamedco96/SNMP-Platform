@@ -110,6 +110,7 @@
                                     <th class="text-center">Node ID</th>
                                     <th class="text-center">Alarm Type</th>
                                     <th class="text-center">Action</th>
+                                    <th class="text-center">Destination</th>
                                     <th class="text-center">Date</th>
                                     <th class="text-center">Submit</th>
                                     <th class="text-center">Remove</th>
@@ -127,6 +128,7 @@
                                     <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getNode_id()%></td>
                                     <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getAlarm_type()%></td>
                                     <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getAction()%></td>
+                                    <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getDes()%></td>
                                     <td class="pt-3-half" contenteditable="true"><%=allAction.get(i).getDate()%></td>
                                  
                                     <td>
